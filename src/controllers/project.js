@@ -13,3 +13,17 @@ exports.getProjects = async (req, res) => {
         });
     }
 };
+
+exports.getProjectById = async (id) => {
+    try {
+        let project = ProjectService.getProjectById(req.params.id)
+        res.json({
+            project
+        })
+    } catch (err){
+        console.error("err",err);
+        rest.status(404).json({
+            message:"Project was not found",
+        })
+    }
+}
