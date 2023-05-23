@@ -17,6 +17,7 @@ exports.getProjects = async (req, res) => {
 exports.getProjectById = async (req, res) => {
     try {
         let project = await ProjectService.getProjectById(req.params.id)
+        console.log(project);
         res.json({
             project: project,
         })
