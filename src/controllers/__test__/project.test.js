@@ -35,4 +35,11 @@ describe("when calling update project controller",()=>{
         ProjectService.updateProject = jest.fn().mockResolvedValue(updatedProject);
     });
 
+    it("should call ProjectService.updateProject with the id and projectData", async () => {
+        //ACT
+        await ProjectController.updateProject(req,res);
+        // ASSERT
+        expect(ProjectService.updateProject);
+    });
+
 });
