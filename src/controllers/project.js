@@ -43,3 +43,7 @@ exports.createProject = async (req,res) => {
         });
     }
 };
+
+exports.updateProject = async () => {
+
+};
