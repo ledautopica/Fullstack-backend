@@ -2,7 +2,7 @@ const Chance = require("chance");
 
 //What we want to test
 
-const ProjectController = require("../projects");
+const ProjectController = require("../project");
 
 //Dependencies
 
@@ -31,6 +31,7 @@ describe("when calling update project controller",()=>{
             status: jest.fn().mockReturnThis(),
             json: jest.fn().mockReturnThis(),
         };
+        global.console = { log: jest.fn(), error: jest.fn() };
 
         ProjectService.updateProject = jest.fn().mockResolvedValue(updatedProject);
     });
@@ -42,4 +43,29 @@ describe("when calling update project controller",()=>{
         expect(ProjectService.updateProject);
     });
 
+    it("should call res.status with a 200 status code", async () => {
+        await ProjectController.updateProject(req,res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+
+    });
+
+
+    it("should call res.json with the updated project data", async () => {
+        await ProjectController.updateProject(req, res);
+
+        expect(res.json).toHaveBeenCalledWith(updatedProject);
+    });
+
+    it("should call res.status with 500 when the Projects.service.updateProject service fails", async() =>{
+        //ARRANGE
+        const error = new Error();
+        ProjectService.updateProject = jest.fn().mockRejectedValue(error);
+
+        //ACT
+        await ProjectController.updateProject(req, res);
+
+        //ASSERT
+        expect(res.status).toHaveBeenCalledWith(500);
+    });
 });
