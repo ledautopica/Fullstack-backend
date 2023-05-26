@@ -4,6 +4,7 @@
   "description": "description",
   "main": "index.js",
   "scripts": {
+    "testCoverage":"jest --coverage",
     "test": "jest --watch",
     "start": "nodemon app.js"
   },

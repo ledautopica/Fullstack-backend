@@ -54,4 +54,18 @@ describe("when calling the project service method", () =>{
 
 });
 
+describe("when a calling deleteProject method",() =>{
+    let id;
+    beforeEach( () => {
+        id = chance.string();
+        Project.findByIdAndDelete = jest.fn().mockReturnThis();
+        Project.exec = jest.fn().mockResolvedValue();
+    });
+     it("should call deleteProject with an ID property", async () => {
+        await ProjectService.deleteProject(id);
+        expect(Project.findByIdAndDelete).toBeCalledWith(id);
+     });
+});
+
+
 

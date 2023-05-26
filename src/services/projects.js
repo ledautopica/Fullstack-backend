@@ -29,3 +29,7 @@ exports.updateProject = async (id, projectData) => {
       .exec();
        
 };
+
+exports.deleteProject = async (id) => {
+    await Project.findByIdAndDelete(id).exec();
+};
