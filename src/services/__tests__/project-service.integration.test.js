@@ -53,19 +53,32 @@ describe("GET /projects", () => {
 describe("POST /projects", () => {
     it("should create a new projects and return a created status code", async () => {
         const response = await request(app).post("/projects").send(projectOne);
+    
     expect(response.statusCode).toBe(201);
-    console.log(response.body.projectSaved);
+    //console.log(response.body.projectSaved);
     expect(response.body.projectSaved).toEqual(
         expect.objectContaining({
-            _id: projectOne.any(String),
+            _id: expect.any(String),
             name: projectOne.name,
             projectLink: projectOne.projectLink,
             description: projectOne.description,
             overview: projectOne.overview,
             imageUrl: projectOne.imageUrl,
             tools: projectOne.tools,
-    })
+        })
     );
 
-    });
-    });
+    await Project.findByIdAndDelete(response.body.projectSaved._id);
+  });
+
+  it ("should return a 400 code and error message when requiered fields are missing", async () => {
+    const {overview, ...incompleteProject } = projectOne;
+
+    const response = await request(app)
+    .post("/projects")
+    .send(incompleteProject);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.error.text).toContain("Was not able to create the project");
+  });
+});
