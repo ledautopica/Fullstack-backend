@@ -3,6 +3,7 @@ const ProjectService = require("../services/projects");
 exports.getProjects = async (req, res) => {
     try {
         let projects = await ProjectService.getProjects();
+        console.log("got hit!");
         res.json({
             projects:projects,
         });
